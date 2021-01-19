@@ -9,9 +9,8 @@ Status template:
 
 ## 0.1.0 (2021-01-19)
 ### ⚡️ Updates
-- [89c508a](https://github.com/firepress-org/pwg-ci-liebling/commit/89c508a) FIX var on CI / theme liebling
-- [9e66fb2](https://github.com/firepress-org/pwg-ci-liebling/commit/9e66fb2) CI for theme liebling
-- [feb851c](https://github.com/firepress-org/pwg-ci-liebling/commit/feb851c) Initial commit
-
-### 🔍 Compare
-- ... with previous release: [ <> 0.1.0](https://github.com/firepress-org/pwg-ci-liebling/compare/...0.1.0)
+- [f42abd3](https://github.com/firepress-org/firepress-ci/commit/f42abd3) Add step artifact
+- [324750f](https://github.com/firepress-org/firepress-ci/commit/324750f) CHANGELOG update
+- [89c508a](https://github.com/firepress-org/firepress-ci/commit/89c508a) FIX var on CI / theme liebling
+- [9e66fb2](https://github.com/firepress-org/firepress-ci/commit/9e66fb2) CI for theme liebling
+- [feb851c](https://github.com/firepress-org/firepress-ci/commit/feb851c) Initial commit
