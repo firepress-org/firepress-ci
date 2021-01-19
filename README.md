@@ -1,3 +1,3 @@
-# pwg-ci-liebling
+# firepress-ci
 
-https://github.com/firepress-org/pwg-ci-liebling
+https://github.com/firepress-org/firepress-ci

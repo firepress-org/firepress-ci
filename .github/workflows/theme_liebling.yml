@@ -76,9 +76,11 @@ jobs:
           echo "$(cat ~/varz/BRANCH_NAME)_$(cat ~/varz/VERSION)" > ~/varz/VERSION_BRANCH
           echo "$(cat ~/varz/BRANCH_NAME)_$(cat ~/varz/VERSION)_$(cat ~/varz/SHORT_HASH_COMMIT)" > ~/varz/VERSION_HASH_ONLY
           echo "$(cat ~/varz/BRANCH_NAME)_$(cat ~/varz/VERSION)_$(cat ~/varz/SHORT_HASH_COMMIT)_$(cat ~/varz/DATE)" > ~/varz/VERSION_HASH_DATE
+          echo "$(pwd)" > ~/varz/HOMMY
 
           echo "liebling" > ~/varz/THEME_NAME
-          echo "$(cat ~/varz/THEME_NAME):$(cat ~/varz/BRANCH_NAME)_$(cat ~/varz/VERSION)_$(cat ~/varz/SHORT_HASH_COMMIT)" > ~/varz/_NOTI_MESSAGE
+          echo "eddiesigner/liebling" > ~/varz/REPO_TO_CLONE
+          echo "$(cat ~/varz/THEME_NAME) $(cat ~/varz/BRANCH_NAME) $(cat ~/varz/VERSION) $(cat ~/varz/SHORT_HASH_COMMIT)" > ~/varz/_NOTI_MESSAGE
       - 
         name: Set ALL variables for this job | à la sauce GitHub Actions
         run: |
@@ -97,9 +99,11 @@ jobs:
           echo "APP_NAME=$(cat ~/varz/APP_NAME)" >> $GITHUB_ENV
           echo "GITHUB_ORG=$(cat ~/varz/GITHUB_ORG)" >> $GITHUB_ENV
           echo "GITHUB_REGISTRY=$(cat ~/varz/GITHUB_REGISTRY)" >> $GITHUB_ENV
+          echo "HOMMY=$(cat ~/varz/HOMMY)" >> $GITHUB_ENV
           echo "GIT_REPO_SOURCE=$(cat ~/varz/GIT_REPO_SOURCE)" >> $GITHUB_ENV
           echo "_NOTI_MESSAGE=$(cat ~/varz/_NOTI_MESSAGE)" >> $GITHUB_ENV
           echo "THEME_NAME=$(cat ~/varz/THEME_NAME)" >> $GITHUB_ENV
+          echo "REPO_TO_CLONE=$(cat ~/varz/REPO_TO_CLONE)" >> $GITHUB_ENV
       -
         name: Show variables
         run: |
@@ -118,9 +122,11 @@ jobs:
           echo "${{ env.APP_NAME }} < APP_NAME"
           echo "${{ env.GITHUB_ORG }} < GITHUB_ORG"
           echo "${{ env.GITHUB_REGISTRY }} < GITHUB_REGISTRY"
+          echo "${{ env.HOMMY }} < HOMMY"
           echo "${{ env.GIT_REPO_SOURCE }} < GIT_REPO_SOURCE"
           echo "${{ env._NOTI_MESSAGE }} < _NOTI_MESSAGE"
           echo "${{ env.THEME_NAME }} < THEME_NAME"
+          echo "${{ env.REPO_TO_CLONE }} < REPO_TO_CLONE"
       - 
         name: Upload variables as artifact
         uses: actions/upload-artifact@master
@@ -159,11 +165,14 @@ jobs:
           echo "DOCKERHUB_USER=$(cat ~/varz/DOCKERHUB_USER)" >> $GITHUB_ENV
           echo "GITHUB_ORG=$(cat ~/varz/GITHUB_ORG)" >> $GITHUB_ENV
           echo "GITHUB_REGISTRY=$(cat ~/varz/GITHUB_REGISTRY)" >> $GITHUB_ENV
+          echo "HOMMY=$(cat ~/varz/HOMMY)" >> $GITHUB_ENV
           echo "GIT_REPO_SOURCE=$(cat ~/varz/GIT_REPO_SOURCE)" >> $GITHUB_ENV
           echo "APP_NAME=$(cat ~/varz/APP_NAME)" >> $GITHUB_ENV
           echo "THEME_NAME=$(cat ~/varz/THEME_NAME)" >> $GITHUB_ENV
+          echo "REPO_TO_CLONE=$(cat ~/varz/REPO_TO_CLONE)" >> $GITHUB_ENV
           echo "_NOTI_MESSAGE=$(cat ~/varz/_NOTI_MESSAGE)" >> $GITHUB_ENV
       -
+        name: Job preparation | Set NodeJS
         uses: actions/setup-node@v1
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
         with:
@@ -173,18 +182,31 @@ jobs:
         # this theme is build over /liebling/src
         # then it compiles and put the liebling.zip at the root of the project
         run: |
-          _home=$(pwd)
-          git clone ${{ env.GIT_REPO_SOURCE }} && cd ${_home}/${{ env.THEME_NAME }}/src
+          git clone https://github.com/${{ env.REPO_TO_CLONE }} && cd ${{ env.HOMMY }}/${{ env.THEME_NAME }}/src
           npm install && npm run production
-          cd ${_home}/${{ env.THEME_NAME }}
-          mkdir -pv ${_home}/to_upload/${{ env.THEME_NAME }}
-          mv ${_home}/${{ env.THEME_NAME }}/${{ env.THEME_NAME }}.zip ${_home}/to_upload/${{ env.THEME_NAME }}/${{ env.THEME_NAME }}.zip
-          cd ${_home}/to_upload/${{ env.THEME_NAME }}
+          cd ${{ env.HOMMY }}/${{ env.THEME_NAME }}
+          mkdir -pv ${{ env.HOMMY }}/to_upload/${{ env.THEME_NAME }}
+          mv ${{ env.HOMMY }}/${{ env.THEME_NAME }}/${{ env.THEME_NAME }}.zip ${{ env.HOMMY }}/to_upload/${{ env.THEME_NAME }}/${{ env.THEME_NAME }}.zip
+      -
+        name: Upload theme as artifact
+        if: ${{ success() }}
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ env.THEME_NAME }}.zip
+          path: ${{ env.HOMMY }}/to_upload/${{ env.THEME_NAME }}
+      -
+        name: Prepare ${{ env.THEME_NAME }} for upload
+        # this theme is build over /liebling/src
+        # then it compiles and put the liebling.zip at the root of the project
+        run: |
+          cd ${{ env.HOMMY }}/to_upload/${{ env.THEME_NAME }}
           unzip ${{ env.THEME_NAME }}.zip && rm ${{ env.THEME_NAME }}.zip
-          cd ${_home}/to_upload/${{ env.THEME_NAME }}
+          cd ${{ env.HOMMY }}/to_upload/${{ env.THEME_NAME }}
           ls -AlhF
-          cd ${_home}/to_upload
-      - name: Upload theme to play-with-ghost.com
+          cd ${{ env.HOMMY }}/to_upload
+      -
+        name: Upload ${{ env.THEME_NAME }} to play-with-ghost.com
+        if: ${{ success() }}
         #if: github.ref == 'refs/heads/master'
         uses: appleboy/scp-action@v0.1.1
         with:
@@ -200,7 +222,8 @@ jobs:
     needs: [build]
     runs-on: ubuntu-20.04
     steps:
-      - name: Job preparation | Setup timezone
+      - 
+        name: Job preparation | Setup timezone
         uses: zcong1993/setup-timezone@v1.1.1
         with:
           timezone: America/Montreal
@@ -227,9 +250,11 @@ jobs:
           echo "DOCKERHUB_USER=$(cat ~/varz/DOCKERHUB_USER)" >> $GITHUB_ENV
           echo "GITHUB_ORG=$(cat ~/varz/GITHUB_ORG)" >> $GITHUB_ENV
           echo "GITHUB_REGISTRY=$(cat ~/varz/GITHUB_REGISTRY)" >> $GITHUB_ENV
+          echo "HOMMY=$(cat ~/varz/HOMMY)" >> $GITHUB_ENV
           echo "GIT_REPO_SOURCE=$(cat ~/varz/GIT_REPO_SOURCE)" >> $GITHUB_ENV
           echo "APP_NAME=$(cat ~/varz/APP_NAME)" >> $GITHUB_ENV
           echo "THEME_NAME=$(cat ~/varz/THEME_NAME)" >> $GITHUB_ENV
+          echo "REPO_TO_CLONE=$(cat ~/varz/REPO_TO_CLONE)" >> $GITHUB_ENV
           echo "_NOTI_MESSAGE=$(cat ~/varz/_NOTI_MESSAGE)" >> $GITHUB_ENV
       -
         name: Notify slack
