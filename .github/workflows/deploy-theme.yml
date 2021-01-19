@@ -185,7 +185,7 @@ jobs:
           ls -AlhF
           cd ${_home}/to_upload
       - name: Upload theme to play-with-ghost.com
-        if: github.ref == 'refs/heads/master'
+        #if: github.ref == 'refs/heads/master'
         uses: appleboy/scp-action@v0.1.1
         with:
           host: "${{ secrets.NODE1 }},${{ secrets.NODE2 }},${{ secrets.NODE3 }}"
@@ -193,9 +193,8 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY_ACTIONS }}
           passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
-          rm: true
           source: "${{ env.THEME_NAME }}/*"
-          target: "${{ env.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes"
+          target: "${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes"
 
   post_build:
     needs: [build]
@@ -234,7 +233,7 @@ jobs:
           echo "_NOTI_MESSAGE=$(cat ~/varz/_NOTI_MESSAGE)" >> $GITHUB_ENV
       -
         name: Notify slack
-        if: github.ref == 'refs/heads/master'
+        #if: github.ref == 'refs/heads/master'
         run: |
           docker run --rm \
             --name noti \
