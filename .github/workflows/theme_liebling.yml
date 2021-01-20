@@ -183,7 +183,7 @@ jobs:
       -
         name: Build theme | ${{ env.THEME_NAME }}
         # It looks funny that we zip the theme to unzip it. The reason is that ghost developper optimize themes and zippin it is only one part of the equation.
-        # When building the zip file goes at the root (not /dist)
+        # When building the zip file goes to / (not /dist)
         run: |
           cd ${{ env.HOMMY }}
           mkdir -pv tmp
@@ -219,7 +219,7 @@ jobs:
           script: |
             rm -rf ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes/${{ env.THEME_NAME }}
             mkdir -pv ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes/${{ env.THEME_NAME }}
-            touch ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes/${{ env.THEME_NAME }}/${{ env.DATE }}_CI
+            touch ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes/${{ env.THEME_NAME }}/${{ env.DATE }}_CI_${{ env.THEME_NAME }}
             hostname
           #sync: true
           #host: "${{ secrets.NODE1 }},${{ secrets.NODE2 }},${{ secrets.NODE3 }}"
@@ -234,7 +234,7 @@ jobs:
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY_ACTIONS }}
           passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
-          # It's important to cd at the right dir level in the step before
+          # The action directory use the workspace as default. We cannot do /zxc/zxc/${{ env.THEME_NAME }}/* at the source
           source: "${{ env.THEME_NAME }}/*"
           target: "${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/content/themes"
 
