@@ -185,9 +185,7 @@ jobs:
         # It looks funny that we zip the theme to unzip it. The reason is that ghost developper optimize themes and zippin it is only one part of the equation.
         # When building the zip file goes to / (not /dist)
         run: |
-          cd ${{ env.HOMMY }}
-          mkdir -pv tmp
-          cd ${{ env.HOMMY }}/tmp
+          cd ${{ env.HOMMY }} && mkdir -pv tmp && cd ${{ env.HOMMY }}/tmp
           git clone --depth=1 https://github.com/${{ env.REPO_TO_CLONE }}
           cd ${{ env.HOMMY }}/tmp/${{ env.THEME_NAME }}/src
           npm install && npm run production
