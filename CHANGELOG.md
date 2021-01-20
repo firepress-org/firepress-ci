@@ -7,6 +7,16 @@ Status template:
 
 # Releases
 
+## 0.2.2 (2021-01-20)
+### ⚡️ Updates
+- [69b65b4](https://github.com/firepress-org/firepress-ci/commit/69b65b4) Update firepress-ci to version 0.2.2 /Dockerfile
+- [2888a85](https://github.com/firepress-org/firepress-ci/commit/2888a85) Add step to set permissions
+- [4299fdd](https://github.com/firepress-org/firepress-ci/commit/4299fdd) Optimize yaml / Theme dope
+- [5a924f0](https://github.com/firepress-org/firepress-ci/commit/5a924f0) minor change to liebling
+
+### 🔍 Compare
+- ... with previous release: [0.2.1 <> 0.2.2](https://github.com/firepress-org/firepress-ci/compare/0.2.1...0.2.2)
+
 ## 0.2.1 (2021-01-20)
 ### ⚡️ Updates
 - [edf6757](https://github.com/firepress-org/firepress-ci/commit/edf6757) Update firepress-ci to version 0.2.1 /Dockerfile
