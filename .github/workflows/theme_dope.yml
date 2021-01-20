@@ -197,7 +197,7 @@ jobs:
           pwd 
           cd ${{ env.HOMMY }}
       -
-        name: Upload ${{ env.THEME_NAME }} as artifact
+        name: Upload theme as artifact
         # The artifacts are zipped on request by Github Actions. No need to upload theme already zipped.
         if: ${{ success() }}
         uses: actions/upload-artifact@master
@@ -205,7 +205,7 @@ jobs:
           name: ${{ env.THEME_NAME }}
           path: ${{ env.HOMMY }}/${{ env.THEME_NAME }}
       - 
-        name: Reset DIR theme on server | via SSH
+        name: Reset theme on server | via SSH
         # There is a risk to reset directory while having issue with the CI down the road
         if: ${{ success() }}
         uses: appleboy/ssh-action@v0.1.4
@@ -223,7 +223,7 @@ jobs:
           #sync: true
           #host: "${{ secrets.NODE1 }},${{ secrets.NODE2 }},${{ secrets.NODE3 }}"
       -
-        name: Upload ${{ env.THEME_NAME }} to play-with-ghost.com | via SSH
+        name: Upload theme to play-with-ghost.com | via SSH
         if: ${{ success() }}
         #if: github.ref == 'refs/heads/master'
         uses: appleboy/scp-action@v0.1.1
@@ -236,6 +236,23 @@ jobs:
           # The action directory use the workspace as default. We cannot do /zxc/zxc/${{ env.THEME_NAME }}/* at the source
           source: "${{ env.THEME_NAME }}/*"
           target: "${{ secrets.SSH_PWG_THEME_PATH_DOPE }}/content/themes"
+      - 
+        name: Set permissions | via SSH
+        # There is a risk to reset directory while having issue with the CI down the road
+        if: ${{ success() }}
+        uses: appleboy/ssh-action@v0.1.4
+        with:
+          host: "${{ secrets.NODE1 }},${{ secrets.NODE2 }},${{ secrets.NODE3 }}"
+          port: ${{ secrets.SSH_PORT }}
+          username: ${{ secrets.SSH_USERNAME }}
+          key: ${{ secrets.SSH_KEY_ACTIONS }}
+          passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
+          script: |
+            chown -R node:node ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}
+            chmod -R 775 ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}
+            find ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/* -type d -exec chmod 775 {} \;
+            find ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/* -type f -exec chmod 664 {} \;
+            find ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }} -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum;
 
   post_build:
     needs: [build]
