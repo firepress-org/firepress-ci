@@ -4,8 +4,8 @@
 ###################################
 
 ARG APP_NAME="firepress-ci"
-ARG VERSION="0.2.1"
-ARG RELEASE="0.2.1"
+ARG VERSION="0.2.2"
+ARG RELEASE="0.2.2"
 ARG GITHUB_USER="firepress-org"
 
 ###################################
