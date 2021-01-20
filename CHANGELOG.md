@@ -7,6 +7,14 @@ Status template:
 
 # Releases
 
+## 0.2.1 (2021-01-20)
+### ⚡️ Updates
+- [edf6757](https://github.com/firepress-org/firepress-ci/commit/edf6757) Update firepress-ci to version 0.2.1 /Dockerfile
+- [3a41910](https://github.com/firepress-org/firepress-ci/commit/3a41910) Optimize yaml / Theme liebling
+
+### 🔍 Compare
+- ... with previous release: [0.2.0 <> 0.2.1](https://github.com/firepress-org/firepress-ci/compare/0.2.0...0.2.1)
+
 ## 0.2.0 (2021-01-19)
 ### ⚡️ Updates
 - [d4f1281](https://github.com/firepress-org/firepress-ci/commit/d4f1281) Update firepress-ci to version 0.2.0 /Dockerfile
