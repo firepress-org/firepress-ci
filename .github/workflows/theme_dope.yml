@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - 'master'
-      - 'edge'
+      #- 'edge'
     paths-ignore:
       - '**.md'
   pull_request:
@@ -248,11 +248,11 @@ jobs:
           key: ${{ secrets.SSH_KEY_ACTIONS }}
           passphrase: ${{ secrets.SSH_KEY_ACTIONS_PASSPHRASE }}
           script: |
-            chown -R node:node ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}
-            chmod -R 775 ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}
-            find ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/* -type d -exec chmod 775 {} \;
-            find ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }}/* -type f -exec chmod 664 {} \;
-            find ${{ secrets.SSH_PWG_THEME_PATH_LIEBLING }} -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum;
+            chown -R node:node ${{ secrets.SSH_PWG_THEME_PATH_DOPE }}
+            chmod -R 775 ${{ secrets.SSH_PWG_THEME_PATH_DOPE }}
+            find ${{ secrets.SSH_PWG_THEME_PATH_DOPE }}/* -type d -exec chmod 775 {} \;
+            find ${{ secrets.SSH_PWG_THEME_PATH_DOPE }}/* -type f -exec chmod 664 {} \;
+            find ${{ secrets.SSH_PWG_THEME_PATH_DOPE }} -type f -print0 | sort -z | xargs -0 sha256sum | sha256sum;
 
   post_build:
     needs: [build]
