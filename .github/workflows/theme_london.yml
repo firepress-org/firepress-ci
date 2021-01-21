@@ -9,7 +9,7 @@ on:
   push:
     branches:
       - 'master'
-      - 'edge'
+      #- 'edge'
     paths-ignore:
       - '**.md'
   pull_request:
