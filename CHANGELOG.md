@@ -7,6 +7,16 @@ Status template:
 
 # Releases
 
+## 0.3.0 (2021-01-20)
+### ⚡️ Updates
+- [ec6bc62](https://github.com/firepress-org/firepress-ci/commit/ec6bc62) Update firepress-ci to version 0.3.0 /Dockerfile
+- [37a5816](https://github.com/firepress-org/firepress-ci/commit/37a5816) Init casper-search
+- [621b965](https://github.com/firepress-org/firepress-ci/commit/621b965) liebling / bypass on branch edge
+- [fb0e104](https://github.com/firepress-org/firepress-ci/commit/fb0e104) dope / FIX paths during step Set permissions
+
+### 🔍 Compare
+- ... with previous release: [0.2.2 <> 0.3.0](https://github.com/firepress-org/firepress-ci/compare/0.2.2...0.3.0)
+
 ## 0.2.2 (2021-01-20)
 ### ⚡️ Updates
 - [69b65b4](https://github.com/firepress-org/firepress-ci/commit/69b65b4) Update firepress-ci to version 0.2.2 /Dockerfile
