@@ -7,6 +7,17 @@ Status template:
 
 # Releases
 
+## 0.4.0 (2021-01-20)
+### ⚡️ Updates
+- [aa03f12](https://github.com/firepress-org/firepress-ci/commit/aa03f12) Update firepress-ci to version 0.4.0 /Dockerfile
+- [eafaf94](https://github.com/firepress-org/firepress-ci/commit/eafaf94) CI not triggered on edge branch
+- [ff485f9](https://github.com/firepress-org/firepress-ci/commit/ff485f9) Init README
+- [80ae830](https://github.com/firepress-org/firepress-ci/commit/80ae830) FIX path casper-search
+- [29d52c5](https://github.com/firepress-org/firepress-ci/commit/29d52c5) Init london
+
+### 🔍 Compare
+- ... with previous release: [0.3.0 <> 0.4.0](https://github.com/firepress-org/firepress-ci/compare/0.3.0...0.4.0)
+
 ## 0.3.0 (2021-01-20)
 ### ⚡️ Updates
 - [ec6bc62](https://github.com/firepress-org/firepress-ci/commit/ec6bc62) Update firepress-ci to version 0.3.0 /Dockerfile
